@@ -57,36 +57,35 @@ namespace Test_2
             {
                 if (array[i] == 1)
                 {
-                    countZero = 0;
-                    count = 0;
-                    beginnew = 0;
                     count++;
-                    for (int j = i + 1; j < array.Length; j++)
+                }
+                else if (array[i] == 0 && count > 0)
+                {
+                    countZero++;
+                    if (countZero == 1)
                     {
-                        if (array[j] == 1)
-                        {
-                            count++;
-                        }
-                        else
-                        {
-                            countZero++;
-                            if (countZero == 1)
-                            {
-                                beginnew = j;
-                            }
-                        }
-                        if (countZero>1)
-                        {
-                            i = beginnew;
-                            break;
-                        }
+                        beginnew = i;
                     }
+                }
+                if ((countZero > 1) || (i == array.Length - 1))
+                {
                     if (count > count2)
                     {
                         count2 = count;
                     }
                     else count = count2;
-                }
+                    if (countZero > 1)
+                    {
+                        i = beginnew;
+                        beginnew = 0;
+                        count = 0;
+                        countZero = 0;
+                    }
+                    else if (i == array.Length - 1)
+                    {
+                        count -= 1;
+                    }
+                }  
             }
             return count;
         }
@@ -94,7 +93,7 @@ namespace Test_2
         {
             Random randomSize = new Random();
             int[] testArray1 = { 0, 0 };
-            int[] testArray2 = { 0, 1 };
+            int[] testArray2 = { 1, 1 };
             int[] testArray3 = { 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1 };
             int[] testArray4 = { 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1};
             int[] testArray5 = { 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1 };
@@ -102,8 +101,8 @@ namespace Test_2
             //int[] newarray = deleteElement(ref array);
             
             //PrintArray(array);
-            PrintArray(testArray5);
-            Console.WriteLine(Counting(testArray5));
+            PrintArray(testArray2);
+            Console.WriteLine(Counting(testArray2));
         }
     }
 }
