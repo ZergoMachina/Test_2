@@ -50,49 +50,71 @@ namespace Test_2
         static int Counting(int[] array)
         {
             int count = 0;
-            int count2 = 0;
+            int sum1 = 0;
+            int sum2 = 0;
             int countZero = 0;
             int beginnew = 0;
+            int beginnew2 = 0;
             for (int i = 0; i < array.Length; i++)
             {
                 if (array[i] == 1)
                 {
                     count++;
                 }
-                else if (array[i] == 0 && count > 0)
+                if (array.Length > 2)
                 {
-                    countZero++;
-                    if (countZero == 1)
+                    if ((array[i] == 0 && array[i - 1] == 0))
                     {
-                        beginnew = i;
+                        countZero = 0;
+                        count = 0;
+                    }
+                    if ((array[i] == 0 && count > 0 && array[i - 1] != 0) || (i == array.Length - 1))
+                    {
+                        countZero++;
+                        if (countZero == 1)
+                        {
+                            beginnew = count;
+                            if (i == array.Length - 1)
+                            {
+                                return sum1;
+                            }
+                            count = 0;
+                        }
+                        if (countZero > 1 || i == array.Length - 1)
+                        {
+                            countZero = 1;
+                            beginnew2 = beginnew;
+                            beginnew = count;
+                            sum2 = sum1;
+                            sum1 = beginnew + beginnew2;
+                            if (sum1 < sum2)
+                            {
+                                sum1 = sum2;
+                            }
+                            if (i != array.Length - 1)
+                            {
+                                count = 0;
+                            }
+                        }
+                        
                     }
                 }
-                if ((countZero > 1) || (i == array.Length - 1))
+                else if (count > 0)
                 {
-                    if (count > count2)
-                    {
-                        count2 = count;
-                    }
-                    else count = count2;
-                    if (countZero > 1)
-                    {
-                        i = beginnew;
-                        beginnew = 0;
-                        count = 0;
-                        countZero = 0;
-                    }
-                    else if (i == array.Length - 1)
-                    {
-                        count -= 1;
-                    }
-                }  
+                    sum1 = count;
+                }
+                if (count == array.Length)
+                {
+                    count--;
+                    sum1 = count;
+                }
             }
-            return count;
+            return sum1;
         }
         static void Main(string[] args)
         {
             Random randomSize = new Random();
-            int[] testArray1 = { 0, 0 };
+            int[] testArray1 = { 0, 1 };
             int[] testArray2 = { 1, 1 };
             int[] testArray3 = { 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1 };
             int[] testArray4 = { 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1};
